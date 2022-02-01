@@ -16,10 +16,17 @@ user_df["purchase/play"] =  user_df["purchase/play"].map(purchase_dict)
 user_favourites = user_df.pivot_table(index=['userId'], columns=['game'], values='timePlayed')
 user_favourites.fillna(0, inplace = True)
 
+# def standardize(row):
+#     new_row = row / 100
+#     return new_row
+# user_favourites = user_favourites.apply(standardize)
+
+game_similarity = cosine_similarity(user_favourites.T)
+game_similarity_df = pd.DataFrame(game_similarity, index=user_df["game"].unique(), columns = user_df["game"].unique())
+
+
 def get_similar_games(game_name, user_raiting):
     similar_games = user_favourites[game_name] * (user_raiting-50)
     similar_games = similar_games.sort_values(ascending=False)
 
     return similar_games
-
-print(get_similar_games("Quake", 100))
