@@ -1,4 +1,3 @@
-from operator import index
 import pandas as pd
 from surprise import Reader
 
@@ -18,5 +17,4 @@ index_df.drop(1, inplace=True)
 
 useful_game_info = games_df[["name", "popular_tags", "game_details", "genre", "all_reviews"]].copy()
 
-print(index_df["Dishonored®: Death of the Outsider™"])
-print(useful_game_info.iloc[index_df["Dishonored®: Death of the Outsider™"]])
+print(useful_game_info.iloc[index_df["Dishonored®: Death of the Outsider™"]]) #example, will be usefull when I combine this wither user_df
