@@ -1,6 +1,4 @@
-from numpy import place
 import pandas as pd
-from scipy import sparse
 from sklearn.metrics.pairwise import cosine_similarity
 
 # "This dataset is a list of user behaviors, with columns: user-id, game-title, behavior-name, value.
@@ -33,7 +31,6 @@ def standardize(row):
     return new_row
 
 user_df["raiting"] = user_df["timePlayed"].apply(create_rating)
-
 
 user_favourites = user_df.pivot_table(index=['userId'], columns=['game'], values='raiting')
 user_favourites = user_favourites.apply(standardize)
