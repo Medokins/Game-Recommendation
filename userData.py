@@ -12,7 +12,7 @@ user_df.drop(user_df.columns[4], axis = 1, inplace = True)
 user_df.columns = ["userId", "game", "purchase/play", "timePlayed"]
 user_df["purchase/play"] =  user_df["purchase/play"].map(purchase_dict)
 
-def create_rating(hours_played):
+def create_rating(hours_played): #this need to be fixed bcs right now it is very ambiguous
     if hours_played <= 1:
         return 0.0
     elif hours_played < 10:
