@@ -3,8 +3,7 @@ import pandas as pd
 useful_game_info = pd.read_csv("Datasets/useful_game_info.csv")
 index_df = pd.read_csv("Datasets/game_indexes.csv")
 
-
-def get_same_genre(game_name, verbose=False, opinion_factored=True):
+def get_same_genre(game_name, opinion_factored=True, verbose=False):
 
     same_genre = []
     game_genre = useful_game_info.iloc[index_df[game_name][0]]["genre"].split(",")[0]
@@ -29,4 +28,4 @@ def get_same_genre(game_name, verbose=False, opinion_factored=True):
 
     return same_genre
 
-get_same_genre("Grand Theft Auto IV", verbose=True, opinion_factored=True)
+print(get_same_genre("Life is Strange 2", opinion_factored=True,  verbose=True))
