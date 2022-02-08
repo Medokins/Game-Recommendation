@@ -1,0 +1,1 @@
+# I found https://github.com/ckatzorke/howlongtobeat api which i will use to better implement rating based on user play time + avarage play time to beat game
