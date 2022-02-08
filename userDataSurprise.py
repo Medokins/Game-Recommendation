@@ -3,7 +3,6 @@ from surprise import Reader, Dataset, SVD
 from surprise.model_selection import cross_validate
 
 user_df = pd.read_csv("Datasets/user_df_with_ratings.csv")
-user_df.drop("purchase/play", axis = 1, inplace=True)
 user_df.drop("Unnamed: 0", axis = 1, inplace=True)
 user_df.drop("timePlayed", axis = 1, inplace=True)
 
