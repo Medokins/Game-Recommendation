@@ -29,6 +29,7 @@ user_df.drop(indexes, inplace = True)
 user_df.drop("purchase/play", axis = 1, inplace = True)
 
 def create_rating(hours_played): #this need to be changed, is ambiguous
+    
     if hours_played <= 1:
         return 0.0
     elif hours_played < 5:
