@@ -31,16 +31,26 @@ user_df.drop("purchase/play", axis = 1, inplace = True)
 def create_rating(hours_played): #this need to be changed, is ambiguous
     if hours_played <= 1:
         return 0.0
-    elif hours_played < 10:
+    elif hours_played < 5:
         return 1.0
-    elif hours_played < 25:
+    elif hours_played < 10:
         return 2.0
-    elif hours_played < 50:
+    elif hours_played < 15:
         return 3.0
-    elif hours_played < 150:
+    elif hours_played < 20:
         return 4.0
-    elif hours_played >= 150:
+    elif hours_played < 25:
         return 5.0
+    elif hours_played < 30:
+        return 6.0
+    elif hours_played < 40:
+        return 7.0
+    elif hours_played < 50:
+        return 8.0
+    elif hours_played < 100:
+        return 9.0
+    elif hours_played >= 100:
+        return 10.0
 
 user_df["rating"] = user_df["timePlayed"].apply(create_rating)
 user_df.to_csv("Datasets/user_df_with_ratings.csv")
