@@ -11,14 +11,6 @@ useful_game_info.to_csv("Datasets/useful_game_info.csv")
 
 #####################################################################################
 
-index_df = useful_game_info["name"]
-index_df = index_df.T
-index_df = (index_df.T.reset_index().T.reset_index(drop=True).set_axis([f'{name}' for name in useful_game_info["name"]], axis=1))
-index_df.drop(1, inplace=True)
-index_df.to_csv("Datasets/game_indexes.csv")
-
-#####################################################################################
-
 purchase_dict = {"purchase": 0, "play":1}
 user_df.drop(user_df.columns[4], axis = 1, inplace = True)
 user_df.columns = ["userId", "game", "purchase/play", "timePlayed"]
@@ -55,3 +47,13 @@ def create_rating(hours_played): #this need to be changed, is ambiguous
 
 user_df["rating"] = user_df["timePlayed"].apply(create_rating)
 user_df.to_csv("Datasets/user_df_with_ratings.csv")
+
+#####################################################################################
+
+index_df = user_df["game"].unique()
+index_df = pd.DataFrame(index_df)
+index_df = index_df.T
+
+index_df = (index_df.T.reset_index().T.reset_index(drop=True).set_axis([f'{name}' for name in user_df["game"].unique()], axis=1))
+index_df.drop(1, inplace=True)
+index_df.to_csv("Datasets/game_indexes.csv")
