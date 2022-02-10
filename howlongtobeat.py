@@ -8,7 +8,7 @@ useful_game_info = pd.read_csv("Datasets/user_df_with_ratings.csv")
 main_df = pd.read_csv("Datasets/game_indexes.csv")
 average_time_played = main_df.copy()
 
-counter = 100
+counter = 0
 num_of_columns = len(main_df.columns)
 
 for game in main_df.columns[1:5]:
@@ -19,7 +19,6 @@ for game in main_df.columns[1:5]:
     print(f"Currently on {percent}%")
     counter += 1
 
-
     for row in range(len(useful_game_info["game"])):
         if useful_game_info.iloc[row]["game"] == game:
             #print(f"Found {game} in row nr {row}")
@@ -28,4 +27,4 @@ for game in main_df.columns[1:5]:
 
     average_time_played[game][0] = summ_of_hours / np.float(number_of_players)
 
-average_time_played.to_csv("Datasets/average_time_played.csv")
+average_time_played.to_csv("Datasets/average_time_play.csv")
