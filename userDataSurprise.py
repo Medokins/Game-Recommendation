@@ -11,7 +11,7 @@ rating_dict = {'itemID': list(user_df["game"]),
                 'rating': list(user_df["rating"])}
 
 df = pd.DataFrame(rating_dict)
-reader = Reader(rating_scale=(0.0, 10.0))
+reader = Reader(rating_scale=(0.0, 5.0))
 
 data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
 
@@ -20,4 +20,4 @@ cross_validate(algo, data, measures=['RMSE'], cv=10, verbose=True)
 
 test_RPG = algo.predict("151603712", "The Witcher 3 Wild Hunt").est #User with this number played Skyrim for more than 150h, but didn't play Witcher which is simmillar in my opinion
 test_FPS = algo.predict("151603712", "DOOM").est
-print(f"RPG fan:\nWitcher: {test_RPG}\nDOOM: {test_FPS}") #the estimated rating for Witcher is pretty high, but low for DOOM (FPS which wasn't on his list)
+print(f"RPG fan:\nWitcher: {test_RPG}\nDOOM: {test_FPS}")
