@@ -1,3 +1,4 @@
+from re import L
 import pandas as pd
 
 games_df = pd.read_csv("Datasets/games.csv")
@@ -20,32 +21,37 @@ indexes = user_df[user_df["purchase/play"] ==  0].index
 user_df.drop(indexes, inplace = True)
 user_df.drop("purchase/play", axis = 1, inplace = True)
 
-def create_rating(hours_played): #this need to be changed, is ambiguous
-    
-    if hours_played <= 1:
-        return 0.0
-    elif hours_played < 5:
-        return 1.0
-    elif hours_played < 10:
-        return 2.0
-    elif hours_played < 15:
-        return 3.0
-    elif hours_played < 20:
-        return 4.0
-    elif hours_played < 25:
-        return 5.0
-    elif hours_played < 30:
-        return 6.0
-    elif hours_played < 40:
-        return 7.0
-    elif hours_played < 50:
-        return 8.0
-    elif hours_played < 100:
-        return 9.0
-    elif hours_played >= 100:
-        return 10.0
+#######################################################################################
 
-user_df["rating"] = user_df["timePlayed"].apply(create_rating)
+average_time_played = pd.read_csv("Datasets/average_time_play_full.csv")
+average_time_played.drop("Unnamed: 0", axis = 1, inplace = True)
+average_time_played.drop("Unnamed: 0.1", axis = 1, inplace = True)
+
+user_df = user_df.reset_index()
+user_df.drop("index", axis = 1, inplace = True)
+
+row = 0
+for user in user_df["userId"]:
+    game = user_df.iloc[row]["game"]
+    user_play_time = user_df.iloc[row]["timePlayed"]
+    average_hours = average_time_played[game][0]
+
+    if user_play_time >= 1.5 * average_hours:
+        raiting = 5
+    elif user_play_time >= average_hours:
+        raiting = 4
+    elif user_play_time >= average_hours / 1.5:
+        raiting = 3
+    elif user_play_time >= average_hours / 2:
+        raiting = 2
+    elif user_play_time >= average_hours / 4:
+        raiting = 1
+    else:
+        raiting = 0
+
+    user_df["rating"] = raiting
+    row += 1
+
 user_df.to_csv("Datasets/user_df_with_ratings.csv")
 
 #####################################################################################
