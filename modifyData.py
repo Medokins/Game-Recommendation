@@ -1,4 +1,3 @@
-from re import L
 import pandas as pd
 
 games_df = pd.read_csv("Datasets/games.csv")
