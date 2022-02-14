@@ -19,9 +19,9 @@ data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
 algo = SVD()
 cross_validate(algo, data, measures=['RMSE'], cv=5, verbose=True)
 
-# test_RPG = algo.predict("151603712", "The Witcher 3 Wild Hunt").est #User with this number played Skyrim for more than 150h, but didn't play Witcher which is simmillar in my opinion
-# test_FPS = algo.predict("151603712", "DOOM").est
-# print(f"RPG fan:\nWitcher: {test_RPG}\nDOOM: {test_FPS}")
+test_RPG = algo.predict("151603712", "The Witcher 3 Wild Hunt").est #User with this number played Skyrim for more than 150h, but didn't play Witcher which is simmillar in my opinion
+test_FPS = algo.predict("151603712", "DOOM").est
+print(f"RPG fan:\nWitcher: {test_RPG}\nDOOM: {test_FPS}")
 
 scores = []
 def get_k_best(user_index, num_of_games = 5):
