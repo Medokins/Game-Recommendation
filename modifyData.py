@@ -41,15 +41,15 @@ if create_user_df_with_ratings:
         user_play_time = user_df.iloc[row]["timePlayed"]
         average_hours = average_time_played[game][0]
 
-        if user_play_time >=  1.5 * average_hours:
+        if user_play_time >  1.5 * average_hours:
             rating = 5
-        elif user_play_time >= 1.25 * average_hours:
+        elif user_play_time > 1.25 * average_hours:
             rating = 4
-        elif user_play_time >= average_hours:
+        elif user_play_time > average_hours:
             rating = 3
-        elif user_play_time >= 0.75 * average_hours:
+        elif user_play_time > 0.75 * average_hours:
             rating = 2
-        elif user_play_time >= 0.5 * average_hours:
+        elif user_play_time > 0.5 * average_hours:
             rating = 1
         else:
             rating = 0
