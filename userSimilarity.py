@@ -1,5 +1,5 @@
 import pandas as pd
-from surprise import Reader, Dataset, KNNWithZScore, SVDpp
+from surprise import Reader, Dataset, SVD
 from surprise.model_selection import cross_validate
 
 games_df = pd.read_csv("Datasets/game_indexes.csv")
@@ -16,7 +16,7 @@ reader = Reader(rating_scale=(0.0, 5.0))
 
 data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
 
-algo = SVDpp()
+algo = SVD()
 cross_validate(algo, data, measures=['RMSE'], cv=5, verbose=True)
 
 # test_RPG = algo.predict("151603712", "The Witcher 3 Wild Hunt").est #User with this number played Skyrim for more than 150h, but didn't play Witcher which is simmillar in my opinion
