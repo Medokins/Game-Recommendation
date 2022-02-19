@@ -2,16 +2,20 @@ import pandas as pd
 import numpy as np
 
 overwrite_data = False
+normalize_ratings = False
 
-user_df = pd.read_csv("Datasets/user_df_with_ratings.csv")
-main_df = pd.read_csv("Datasets/game_indexes.csv")
+if overwrite_data:
+    user_df = pd.read_csv("Datasets/user_df_with_ratings.csv")
+    main_df = pd.read_csv("Datasets/game_indexes.csv")
 
-user_df.drop("Unnamed: 0", axis = 1, inplace=True)
-user_df.drop("timePlayed", axis = 1, inplace=True)
+    user_df.drop("Unnamed: 0", axis = 1, inplace=True)
+    user_df.drop("timePlayed", axis = 1, inplace=True)
+    main_df.drop("Unnamed: 0", axis = 1, inplace=True)
 
-main_df.drop("Unnamed: 0", axis = 1, inplace=True)
-
-#I want to create user x games dataframe that contains ratings
+if normalize_ratings:
+    user_df = pd.read_csv("Datasets/user_df_with_ratings.csv")
+    ratings_df = pd.read_csv("Datasets/user_df_with_all_ratings.csv")
+    ratings_df.drop("Unnamed: 0", axis = 1, inplace=True)
 
 def create_rating_vector(userId, verbose = False):
 
@@ -32,10 +36,41 @@ def create_rating_vector(userId, verbose = False):
 
     
     return rating_vector
+
 if overwrite_data:
     for user in user_df["userId"].unique():
         main_df_length = len(main_df)
         main_df.loc[main_df_length] = create_rating_vector(userId = user)
-        print(main_df_length / len(user_df["userId"].unique()), "%")
-
+        print(main_df_length / len(user_df["userId"].unique()) * 100, "%")
     main_df.to_csv("Datasets/user_df_with_all_ratings.csv")
+
+if normalize_ratings:
+    ratings_df.drop([0], axis = 0, inplace=True)
+    ratings_df['userId'] = user_df['userId'].unique()
+    ratings_df.set_index('userId', inplace=True)
+
+    def normalize(dataframe):
+        dataframe_mean = dataframe.mean(axis=1)
+        return dataframe.subtract(dataframe_mean, axis = 0)
+
+    ratings_df = normalize(ratings_df)
+    ratings_df.to_csv("Datasets/user_df_with_all_ratings_normalized.csv")
+
+
+#I'm using scipy which has it own normalization method so im leaving normalized ratings for now
+
+ratings_df = pd.read_csv("Datasets/user_df_with_all_ratings.csv")
+ratings_df.set_index('userId', inplace=True)
+
+def similarity_pearson(x, y):
+    import scipy.stats
+    return scipy.stats.pearsonr(x, y)[0]
+
+users = len(ratings_df)
+games = len(ratings_df.columns)
+
+similarity_matrix = np.array([similarity_pearson(ratings_df.iloc[i,:], ratings_df.iloc[j,:])
+                            for i in range(0, users) for j in range(0, games)])
+
+similarity_df = pd.DataFrame(data = similarity_matrix.reshape(len(ratings_df['userId']), len(ratings_df.columns())))
+similarity_df.to_csv("Datasets/similarity_matrix.csv")
