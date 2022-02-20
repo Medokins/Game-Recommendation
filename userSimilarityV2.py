@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import scipy.stats
+import time
 
 overwrite_data = False
 normalize_ratings = False
@@ -67,19 +68,27 @@ ratings_df.drop('userId', axis=1, inplace=True)
 users = len(ratings_df)
 games = len(ratings_df.columns)
 
-similarity_matrix = []
+# similarity_matrix = []
+# for i in range(users):
+#     for j in range(games):
+#         x, y = ratings_df.iloc[i,:].values, ratings_df.iloc[j,:].values
+#         nas = np.logical_or(np.isnan(x), np.isnan(y))
+#         print(f"X:{x[~nas]}\nY:{y[~nas]}")
+#         print(f"len of X:{len(x[~nas])}, len of Y:{len(y[~nas])}")
+#         corr = scipy.stats.pearsonr(x[~nas], y[~nas])[0]
+#         print(f"Correlation:{corr}\n**************************************************\n")
+#         similarity_matrix.append(corr)
+# similarity_matrix = np.array(similarity_matrix)
+# similarity_df = pd.DataFrame(data = similarity_matrix.reshape(len(ratings_df), len(ratings_df.columns)))
+# similarity_df.to_csv("Datasets/similarity_matrix.csv")
 
-for i in range(users):
-    for j in range(games):
-        x, y = ratings_df.iloc[i,:].values, ratings_df.iloc[j,:].values
+ratings_df.fillna(99, inplace=True)
 
-        nas = np.logical_or(np.isnan(x), np.isnan(y))
-        print(f"X:{x[~nas]}\nY:{y[~nas]}")
-        print(f"len of X:{len(x[~nas])}, len of Y:{len(y[~nas])}")
-        corr = scipy.stats.pearsonr(x[~nas], y[~nas])[0]
-        print(f"Correlation:{corr}\n**************************************************\n")
-        similarity_matrix.append(corr)
+def similarity_pearson(x, y):
+    return scipy.stats.pearsonr(x, y)[0]
 
-similarity_matrix = np.array(similarity_matrix)
-similarity_df = pd.DataFrame(data = similarity_matrix.reshape(len(ratings_df), len(ratings_df.columns)))
-similarity_df.to_csv("Datasets/similarity_matrix.csv")
+similarity_matrix = np.array([similarity_pearson(ratings_df.iloc[i,:], ratings_df.iloc[j,:])
+                            for i in range(0, users) for j in range(0, games)])
+
+similarity_df = pd.DataFrame(data = similarity_matrix.reshape(users, games))
+similarity_df.to_csv("Datasets/similarity_df.csv")
