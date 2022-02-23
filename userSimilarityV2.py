@@ -1,3 +1,4 @@
+from re import T
 import pandas as pd
 import numpy as np
 import scipy.stats
@@ -82,12 +83,21 @@ if create_similarity_matrix:
 #I still need to do some reading into this because I feel like this is wrong
 
 similarity_df = pd.read_csv("Datasets/similarity_df.csv")
-ratings_df = pd.read_csv("Datasets/user_df_with_all_ratings.csv")
-
 similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
-print(similarity_df.head(10))
+
+game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
+game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
 
 def neighbours(sim):
-    return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)]
+   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)]
 
-#print(neighbours(similarity_df.iloc[0]))
+index = 0
+
+top_games = neighbours(similarity_df.iloc[index])
+if str(index) in top_games:
+    top_games.remove(str(index))
+
+print(top_games)
+
+for index in top_games:
+    print(game_indexes_inverted[index][0])
