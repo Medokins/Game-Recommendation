@@ -1,11 +1,13 @@
+from re import T
 import pandas as pd
 
 games_df = pd.read_csv("Datasets/games.csv")
 user_df = pd.read_csv("Datasets/user.csv")
 
 create_useful_game_info = False
-create_user_df_with_ratings = True
+create_user_df_with_ratings = False
 create_game_indexes = False
+create_game_indexes_inverted = True
 
 #####################################################################################
 
@@ -70,3 +72,16 @@ if create_game_indexes:
     index_df = (index_df.T.reset_index().T.reset_index(drop=True).set_axis([f'{name}' for name in user_df["game"].unique()], axis=1))
     index_df.drop(1, inplace=True)
     index_df.to_csv("Datasets/game_indexes.csv")
+
+######################################################################################
+
+if create_game_indexes_inverted:
+    game_indexes = pd.read_csv("Datasets/game_indexes.csv")
+    game_indexes.drop("Unnamed: 0", axis = 1, inplace=True)
+
+    games = game_indexes.columns
+    indexes = [i for i in range(len(games))]
+
+    game_indexes_inverted = pd.DataFrame(games, index=indexes, columns=["game"])
+    game_indexes_inverted = game_indexes_inverted.T
+    game_indexes_inverted.to_csv("Datasets/game_indexes_inverted.csv")
