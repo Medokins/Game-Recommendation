@@ -89,11 +89,11 @@ game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
 game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
 
 def neighbours(sim):
-   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)]
+   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
 
-index = 0
-
+index = 2
 top_games = neighbours(similarity_df.iloc[index])
+
 if str(index) in top_games:
     top_games.remove(str(index))
 
