@@ -1,11 +1,11 @@
-from re import T
+from collections import UserString
 import pandas as pd
 import numpy as np
 import scipy.stats
 
 overwrite_data = False
 normalize_ratings = False
-create_similarity_matrix = False
+create_similarity_matrix = True
 
 if overwrite_data:
     user_df = pd.read_csv("Datasets/user_df_with_ratings.csv")
@@ -63,41 +63,53 @@ if normalize_ratings:
 #I'm using scipy which has it own normalization method so im leaving normalized ratings for now
 
 if create_similarity_matrix:
+
     ratings_df = pd.read_csv("Datasets/user_df_with_all_ratings.csv")
     ratings_df.drop('userId', axis=1, inplace=True)
-
-    users = len(ratings_df)
-    games = len(ratings_df.columns)
     ratings_df.fillna(99, inplace=True)
 
     def similarity_pearson(x, y):
         return scipy.stats.pearsonr(x, y)[0]
 
-    similarity_matrix = np.array([similarity_pearson(ratings_df.iloc[i,:], ratings_df.iloc[j,:])
-                                for i in range(0, users) for j in range(0, games)])
+    users = len(ratings_df)
+    similarity_matrix = []
 
-    similarity_df = pd.DataFrame(data = similarity_matrix.reshape(users, games))
-    similarity_df.to_csv("Datasets/similarity_df.csv")
+    for i in range(users):
+
+        for j in range(users):
+            similarity_matrix.append(similarity_pearson(ratings_df.iloc[i,:], ratings_df.iloc[j,:]))    
+            print(f"Currently:{(i*users + j) / (users*users) * 100}%")
+
+        if i%1000 == 0:
+            textfile = open("backup_file.txt", "w")
+            for element in similarity_matrix:
+                textfile.write(str(element) + " ")
+            textfile.close()
+    
+    similarity_matrix = np.array(similarity_matrix)
+
+    similarity_df = pd.DataFrame(data = similarity_matrix.reshape(users, users))
+    similarity_df.to_csv("Datasets/users_similarity_df.csv")
 
 ##################################################################################################
 #I still need to do some reading into this because I feel like this is wrong
 
-similarity_df = pd.read_csv("Datasets/similarity_df.csv")
-similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
+# similarity_df = pd.read_csv("Datasets/similarity_df.csv")
+# similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
 
-game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
-game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
+# game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
+# game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
 
-def neighbours(sim):
-   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
+# def neighbours(sim):
+#    return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
 
-index = 2
-top_games = neighbours(similarity_df.iloc[index])
+# index = 2
+# top_games = neighbours(similarity_df.iloc[index])
 
-if str(index) in top_games:
-    top_games.remove(str(index))
+# if str(index) in top_games:
+#     top_games.remove(str(index))
 
-print(top_games)
+# print(top_games)
 
-for index in top_games:
-    print(game_indexes_inverted[index][0])
+# for index in top_games:
+#     print(game_indexes_inverted[index][0])
