@@ -1,4 +1,3 @@
-from collections import UserString
 import pandas as pd
 import numpy as np
 import scipy.stats
@@ -94,22 +93,22 @@ if create_similarity_matrix:
 ##################################################################################################
 #I still need to do some reading into this because I feel like this is wrong
 
-# similarity_df = pd.read_csv("Datasets/similarity_df.csv")
-# similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
+similarity_df = pd.read_csv("Datasets/similarity_df.csv")
+similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
 
-# game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
-# game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
+game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
+game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
 
-# def neighbours(sim):
-#    return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
+def neighbours(sim):
+   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
 
-# index = 2
-# top_games = neighbours(similarity_df.iloc[index])
+index = 2
+top_games = neighbours(similarity_df.iloc[index])
 
-# if str(index) in top_games:
-#     top_games.remove(str(index))
+if str(index) in top_games:
+    top_games.remove(str(index))
 
-# print(top_games)
+print(top_games)
 
-# for index in top_games:
-#     print(game_indexes_inverted[index][0])
+for index in top_games:
+    print(game_indexes_inverted[index][0])
