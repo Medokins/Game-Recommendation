@@ -77,9 +77,9 @@ if create_similarity_matrix:
 
         for j in range(users):
             similarity_matrix.append(similarity_pearson(ratings_df.iloc[i,:], ratings_df.iloc[j,:]))    
-            print(f"Currently:{(i*users + j) / (users*users) * 100}%")
 
         if i%1000 == 0:
+            print(f"Currently:{(i*users + j) / (users*users) * 100}%")
             textfile = open("backup_file.txt", "w")
             for element in similarity_matrix:
                 textfile.write(str(element) + " ")
@@ -91,7 +91,6 @@ if create_similarity_matrix:
     similarity_df.to_csv("Datasets/users_similarity_df.csv")
 
 ##################################################################################################
-#I still need to do some reading into this because I feel like this is wrong
 
 similarity_df = pd.read_csv("Datasets/similarity_df.csv")
 similarity_df.drop("Unnamed: 0", axis = 1, inplace=True)
@@ -100,15 +99,7 @@ game_indexes_inverted = pd.read_csv("Datasets/game_indexes_inverted.csv")
 game_indexes_inverted.drop("Unnamed: 0", axis = 1, inplace=True)
 
 def neighbours(sim):
-   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)] #this reaches only 3600 users instad of all 11124
+   return [sim.index[i] for i, v in enumerate(sim) if (v>=0.3)]
 
-index = 2
-top_games = neighbours(similarity_df.iloc[index])
-
-if str(index) in top_games:
-    top_games.remove(str(index))
-
-print(top_games)
-
-for index in top_games:
-    print(game_indexes_inverted[index][0])
+current_player = 0
+similar_players = neighbours(similarity_df.iloc[current_player])
