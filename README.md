@@ -8,5 +8,4 @@ Collaborative Filtering based on item similarity is completed and working pretty
 
 Collaborative Filtering based on user similarity is completed and working well.
 
-In the future I will implement option to add Your own user data and recommend games based on it. For now If You want to use this, use ItemSimilairty and just write name of the game you most like. 
 PS. I'm currently working on small Steam API so It will automaticly download Your Steam Info and recommend game You might like.
