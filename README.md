@@ -8,4 +8,4 @@ Collaborative Filtering based on item similarity is completed and working pretty
 
 Collaborative Filtering based on user similarity is completed and working well.
 
-PS. I'm currently working on small Steam API so It will automaticly download Your Steam Info and recommend game You might like.
+Many thanks to [zeo](https://github.com/zeo/python-steamuser) for providing this very useful Steam API. (steamUser.py)
