@@ -9,3 +9,6 @@ Collaborative Filtering based on item similarity is completed and working pretty
 Collaborative Filtering based on user similarity is completed and working well.
 
 Many thanks to [zeo](https://github.com/zeo/python-steamuser) for providing this very useful Steam API. (steamUser.py)
+
+PS. To get [Steam API Key](https://steamcommunity.com/dev/apikey)
+    To get [Steam User Id](https://www.youtube.com/watch?v=wuvE6XDs3WQ&ab_channel=AKInformatica-AkEsports-EsportPalace) (It's a 40s video, this wasn't created by me) 
