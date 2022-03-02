@@ -1,13 +1,23 @@
 ﻿# Game-Recommendation
 
-This is my first project using Collaborative Filtering.
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
 
-I chose surprise packet for implementing Collaborative Filtering based on user similarty, cosine_similarity from sklearn for implementing Collaborative Filtering based on item similiarty and two Kaggle datasets for games and user data. I also created rating column which is based on average time played by users in this dataset vs the user play time.
 
-Collaborative Filtering based on item similarity is completed and working pretty well in my opinion.
-Collaborative Filtering based on user similarity is completed and working well.
+## General info
+This algorithm recommends games based on user Steam library.
 
-Many thanks to [zeo](https://github.com/zeo/python-steamuser) for providing this very useful Steam API. (steamUser.py)
+## Technologies
+Collaborative Filtering based on Item similarity <br />
+* Cosine_similarity from sklearn <br />
+Collaborative Filtering based on User similarity <br />
+* Pearsonr algorithm from scipy.stats <br />
+For gathergin data from Steam <br />
+* Many thanks to [zeo](https://github.com/zeo/python-steamuser <br />
 
-PS. To get: [Steam API Key](https://steamcommunity.com/dev/apikey) <br />
-To get [Steam User Id](https://www.youtube.com/watch?v=wuvE6XDs3WQ&ab_channel=AKInformatica-AkEsports-EsportPalace) (It's a 40s video, this wasn't created by me) 
+## Setup
+To run this project, paste Your steamId and steam API key [here](https://github.com/Medokins/Game-Recommendation/blob/main/SteamAPI/steamUserData.py).
+* [steam API Key](https://steamcommunity.com/dev/apikey) <br />
+* [steamId](https://www.youtube.com/watch?v=wuvE6XDs3WQ&ab_channel=AKInformatica-AkEsports-EsportPalace) (It's a 40s video, this wasn't created by me) 
