@@ -12,13 +12,13 @@ This algorithm recommends games based on user Steam library.
 ## Technologies
 Pandas and numpy for data modification.
 
-Collaborative Filtering based on Item similarity <br />
+Collaborative Filtering based on Item similarity
 * Cosine_similarity from sklearn <br />
 
-Collaborative Filtering based on User similarity <br />
+Collaborative Filtering based on User similarity
 * Pearsonr algorithm from scipy.stats <br />
 
-For gathering data from Steam <br />
+For gathering data from Steam
 * Many thanks to [zeo](https://github.com/zeo/python-steamuser) <br />
 
 ## Setup
