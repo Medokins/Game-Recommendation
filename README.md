@@ -25,3 +25,5 @@ For gathering data from Steam
 To run this project, paste Your steam Id and steam API key [here](https://github.com/Medokins/Game-Recommendation/blob/main/SteamAPI/steamUserData.py).
 * [steam API Key](https://steamcommunity.com/dev/apikey) <br />
 * [steam Id](https://www.youtube.com/watch?v=wuvE6XDs3WQ&ab_channel=AKInformatica-AkEsports-EsportPalace) (It's a 40s video, this wasn't created by me) 
+
+PS The datasets that I've created are to large to post on github, If you want to avoid training data yourself, write me a message and I'll give You GoogleDisc link with finished dataframe.
